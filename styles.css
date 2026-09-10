@@ -1,0 +1,708 @@
+/* ============================================================
+   VIBRANT WINES — ORDER PORTAL
+   Visual system matches the existing Vibrant Wines portfolio site:
+   dark brown / cream palette, Playfair Display italic headers,
+   EB Garamond body, maroon accent, hairline rules, bordered panels.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root {
+  --cream-soft: #f9f6e9;
+  --cream:      #f0eadb;
+  --gold:       #bba261;
+  --maroon:     #862632;
+  --maroon-dark:#631b24;
+  --line:       #ddd2b0;
+  --line-dark:  #bba261;
+  --text-dark:  #2f2718;
+  --text-cream: #2f2718;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream-soft);
+  color: var(--text-dark);
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+h1, h2, h3, .display {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+a { color: inherit; }
+
+button {
+  font-family: 'EB Garamond', serif;
+  cursor: pointer;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background: var(--cream-soft);
+  color: var(--text-dark);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 2px solid var(--gold);
+}
+.topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 84px;
+  gap: 20px;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.brand-logo {
+  height: 56px;
+  width: auto;
+  display: block;
+}
+.cart-button {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--text-dark);
+  padding: 9px 16px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color .15s ease;
+}
+.cart-button:hover { border-color: var(--maroon); }
+.cart-count {
+  background: var(--maroon);
+  color: #fff;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ---------- Floating cart shortcut (bottom-right) ---------- */
+.fab-cart {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 45;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--maroon);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.28);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.fab-cart:hover { background: var(--maroon-dark); transform: translateY(-2px); }
+.fab-cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--cream-soft);
+  color: var(--maroon);
+  border: 1.5px solid var(--maroon);
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+@media (max-width: 640px) {
+  .fab-cart { right: 14px; bottom: 14px; width: 50px; height: 50px; }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--cream);
+  color: var(--text-dark);
+  padding: 40px 20px 34px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.hero-inner { max-width: 720px; margin: 0 auto; }
+.hero h1 {
+  font-style: italic;
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+.hero p {
+  font-size: 16.5px;
+  color: #6b5e4c;
+  margin: 0 0 4px;
+}
+.hero-gst {
+  font-size: 19px !important;
+  color: var(--text-dark) !important;
+}
+.hero-moq {
+  font-size: 15px !important;
+  color: var(--maroon-dark) !important;
+  margin-top: 6px !important;
+}
+.hero .confirm-note {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14.5px;
+  color: var(--text-cream);
+  border-top: 1px solid var(--line-dark);
+  padding-top: 12px;
+}
+.hero .confirm-note .tick { color: var(--maroon); }
+.hero-contact {
+  margin-top: 12px;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: #6b5e4c;
+}
+
+/* ---------- Filter bar ---------- */
+.filterbar {
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 84px;
+  z-index: 30;
+  transition: transform 0.25s ease;
+}
+.filterbar.filterbar-hidden {
+  transform: translateY(-100%);
+}
+.filterbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.filterbar input[type="search"] {
+  flex: 1 1 220px;
+  padding: 9px 12px;
+  border: 1px solid var(--line-dark);
+  background: #fff;
+  font-family: 'EB Garamond', serif;
+  font-size: 15.5px;
+  color: var(--text-dark);
+}
+.filterbar select {
+  padding: 9px 10px;
+  border: 1px solid var(--line-dark);
+  background: #fff;
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  color: var(--text-dark);
+}
+.filterbar .result-count {
+  margin-left: auto;
+  font-size: 14px;
+  color: #6b5e4c;
+  white-space: nowrap;
+}
+.filterbar .reset-link {
+  font-size: 14px;
+  color: var(--maroon);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ---------- Catalog (producer sections + tables) ---------- */
+.main { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+
+.producer-block {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  padding: 24px clamp(16px, 4vw, 32px) 28px;
+  margin-bottom: 26px;
+}
+.producer-eyebrow {
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  color: var(--maroon-dark);
+  margin-bottom: 6px;
+}
+.producer-name {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(21px, 4vw, 27px);
+  line-height: 1.2;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+  overflow-wrap: break-word;
+}
+.producer-subtitle {
+  font-size: 14.5px;
+  color: #6b5e4c;
+  margin-bottom: 8px;
+}
+.card-eta {
+  display: inline-block;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  color: var(--maroon-dark);
+  border: 1px solid var(--maroon-dark);
+  padding: 2px 7px;
+  margin-bottom: 10px;
+}
+.producer-bio {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #4a4030;
+  margin: 6px 0 12px;
+  max-width: 74ch;
+}
+.why-box {
+  background: var(--cream);
+  border-left: 3px solid var(--maroon);
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  max-width: 74ch;
+}
+.why-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--maroon-dark);
+  margin-bottom: 3px;
+}
+.why-box p { margin: 0; font-style: italic; font-size: 14.5px; color: #4a3b2a; line-height: 1.4; }
+
+.producer-photos {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  clear: both;
+}
+.producer-photos img {
+  /* Height-based, matching the source catalog exactly: each producer's
+     photo set gets its own hand-tuned height (from the source's inline
+     style, preserved by the crawler), auto width to keep natural
+     proportions, no responsive resizing (the source itself doesn't
+     resize these for mobile either — same size on every screen).
+     This intentionally reproduces the source's own bandeau technique
+     rather than inventing a new one; the earlier "narrow squashed
+     photo" bug was actually an unrelated float-clearing bug elsewhere
+     on the page (see .wines-table tr overflow:hidden below), not a
+     flaw in this approach — so it's safe to use again now that's fixed. */
+  width: auto;
+  max-width: 100%;
+  flex: 0 0 auto;
+  border: 0.5pt solid #c9a76a;
+}
+
+/* Mobile only: some producers' source height (e.g. 100mm) is proportionate
+   on a wide desktop row but reads as too tall/stretched on a narrow phone
+   screen, since the source never scales this down for mobile itself. Cap
+   it here — this only affects producers whose source height already
+   exceeds this cap, so most producers (already comfortably under it)
+   render identically to before. */
+@media (max-width: 700px) {
+  .producer-photos img { max-height: 170px; width: auto; }
+}
+
+/* ---------- Wines table ---------- */
+.wines-table-wrap { width: 100%; overflow-x: visible; }
+.wines-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.wines-table col.col-cuvee, .wines-table th.col-cuvee, .wines-table td.col-cuvee { width: 27%; }
+.wines-table th.col-desc, .wines-table td.col-desc { width: 45%; }
+.wines-table th.col-price, .wines-table td.col-price { width: 13%; }
+.wines-table th.col-cart, .wines-table td.col-cart { width: 15%; }
+
+.wines-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--maroon-dark);
+  border-bottom: 1px solid var(--maroon-dark);
+  padding: 8px 10px 8px 0;
+}
+.wines-table td {
+  padding: 13px 10px 13px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: 14.5px;
+  overflow-wrap: break-word;
+}
+.row-cuvee-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--text-dark);
+}
+.row-type { font-size: 12.5px; color: var(--maroon-dark); margin-top: 2px; }
+.col-desc { color: #4a4030; line-height: 1.45; font-size: 13.8px; }
+.col-price { font-weight: 600; color: var(--maroon); white-space: nowrap; }
+.col-cart { text-align: right; }
+
+.sold-out-label { font-size: 13px; color: #9a8f7b; font-style: italic; white-space: nowrap; }
+
+.add-btn {
+  background: var(--maroon);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background .15s ease;
+}
+.add-btn:hover { background: var(--maroon-dark); }
+
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--maroon);
+}
+.qty-stepper button {
+  background: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  font-size: 15px;
+  color: var(--maroon);
+  line-height: 1;
+}
+.qty-stepper button:hover { background: var(--cream); }
+.qty-stepper .qty-val { width: 24px; text-align: center; font-size: 14.5px; display: inline-block; }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7a6d58;
+  font-style: italic;
+}
+
+/* ---------- Cart drawer ---------- */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(30, 24, 16, 0.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 50;
+}
+.overlay.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  background: var(--cream-soft);
+  color: var(--text-dark);
+  border-left: 2px solid var(--gold);
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--line-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.drawer-header h2 { font-style: italic; font-size: 22px; }
+.drawer-close {
+  background: none; border: none; color: var(--text-cream);
+  font-size: 22px; line-height: 1; padding: 4px 8px;
+}
+
+.drawer-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+.cart-line {
+  display: flex; gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+.cart-line-info { flex: 1; }
+.cart-line-name { font-size: 15px; margin-bottom: 2px; }
+.cart-line-meta { font-size: 12.5px; color: #6b5e4c; margin-bottom: 8px; }
+.cart-line-controls { display: flex; align-items: center; justify-content: space-between; }
+.cart-line-price { font-size: 14.5px; color: var(--text-dark); }
+.cart-line .qty-stepper { border-color: var(--maroon); }
+.cart-line .qty-stepper button { color: var(--maroon); }
+.cart-line .qty-stepper button:hover { background: var(--cream); }
+.remove-link {
+  background: none; border: none; color: var(--maroon-dark);
+  font-size: 12.5px; text-decoration: underline; padding: 0;
+}
+
+.drawer-empty { text-align: center; padding: 50px 10px; color: #8a7a63; font-style: italic; }
+
+.drawer-footer {
+  border-top: 1px solid var(--gold);
+  padding: 16px 20px 20px;
+}
+.drawer-total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 6px; margin-bottom: 14px; font-size: 17px;
+  border-top: 1px solid var(--gold); padding-top: 10px;
+}
+.drawer-total strong { font-size: 22px; color: var(--maroon); }
+.cart-breakdown-line {
+  display: flex; justify-content: space-between;
+  font-size: 14.5px; padding: 3px 0; color: var(--text-dark);
+}
+.cart-breakdown-line.delivery-line { color: var(--maroon-dark); }
+.cart-breakdown-line.free-line { color: var(--maroon-dark); font-style: italic; }
+.checkout-btn {
+  width: 100%;
+  background: var(--maroon);
+  color: #fff;
+  border: none;
+  padding: 13px;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+.checkout-btn:hover { background: var(--maroon-dark); }
+.checkout-btn:disabled { background: #cbbfa9; color: #85795f; cursor: not-allowed; }
+
+/* ---------- Checkout modal ---------- */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(30, 24, 16, 0.55);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 70;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--cream-soft);
+  max-width: 640px;
+  width: 100%;
+  border: 1px solid var(--line-dark);
+}
+.modal-header {
+  background: var(--cream);
+  color: var(--text-dark);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--gold);
+}
+.modal-header h2 { font-style: italic; font-size: 22px; }
+.modal-close {
+  background: none; border: none; color: var(--text-cream);
+  font-size: 20px; padding: 4px 8px;
+}
+.modal-body { padding: 22px 24px 26px; }
+
+.order-summary {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  font-size: 14.5px;
+}
+.order-summary-line { display: flex; justify-content: space-between; padding: 4px 0; }
+.order-summary-total {
+  display: flex; justify-content: space-between;
+  border-top: 1px solid var(--line);
+  margin-top: 8px; padding-top: 8px;
+  font-size: 16px; font-weight: 600; color: var(--maroon);
+}
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 13.5px;
+  letter-spacing: 0.3px;
+  color: #5c503e;
+  margin-bottom: 5px;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line-dark);
+  background: #fff;
+  font-family: 'EB Garamond', serif;
+  font-size: 15.5px;
+  color: var(--text-dark);
+}
+.field textarea { resize: vertical; min-height: 70px; }
+.field select { cursor: pointer; }
+.field-row { display: flex; gap: 14px; }
+.field-row .field { flex: 1; }
+
+.delivery-note {
+  font-size: 13.5px;
+  color: var(--maroon-dark);
+  background: var(--cream);
+  border-left: 3px solid var(--maroon);
+  padding: 8px 12px;
+  margin-bottom: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--maroon);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 16.5px;
+}
+.submit-btn:hover { background: var(--maroon-dark); }
+.submit-btn:disabled { background: #cbbfa9; color: #85795f; cursor: not-allowed; }
+
+.form-status {
+  margin-top: 12px;
+  font-size: 14.5px;
+  text-align: center;
+}
+.form-status.error { color: #a33; }
+.form-status.sending { color: #6b5e4c; }
+
+/* ---------- Thank-you screen ---------- */
+.thankyou {
+  text-align: center;
+  padding: 20px 4px 6px;
+}
+.thankyou .tick-big {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--maroon);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 16px;
+}
+.thankyou h3 { font-style: italic; font-size: 22px; margin-bottom: 10px; }
+.thankyou p { color: #4a4030; font-size: 15.5px; line-height: 1.5; margin: 0 0 6px; }
+.thankyou .continue-btn {
+  margin-top: 18px;
+  background: none;
+  border: 1px solid var(--maroon);
+  color: var(--maroon);
+  padding: 10px 22px;
+  font-size: 15px;
+}
+.thankyou .continue-btn:hover { background: var(--maroon); color: #fff; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--cream);
+  color: #6b5e4c;
+  text-align: center;
+  padding: 26px 20px;
+  font-size: 13.5px;
+  border-top: 2px solid var(--gold);
+}
+
+/* ---------- Loading ---------- */
+.loading-state {
+  text-align: center;
+  padding: 90px 20px;
+  color: #7a6d58;
+  font-style: italic;
+  font-size: 16px;
+}
+.load-error {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--maroon);
+  font-size: 15px;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .topbar-inner { height: 64px; }
+  .brand-logo { height: 42px; }
+  .filterbar { top: 64px; }
+  .hero h1 { font-size: 30px; }
+  .hero p { font-size: 15px; }
+  .hero-gst { font-size: 16.5px !important; }
+  .hero-moq { font-size: 13.5px !important; }
+  .filterbar-inner { gap: 8px; }
+  .filterbar input[type="search"] { flex: 1 1 100%; }
+  .filterbar select { flex: 1 1 calc(50% - 8px); min-width: 0; }
+  .filterbar .result-count { flex: 1 1 100%; margin-left: 0; text-align: right; }
+  .field-row { flex-direction: column; gap: 0; }
+}
+
+/* Below this width, the wines table becomes a stacked card list —
+   this is the fix for the old "columns overlap / text hidden" bug:
+   a 4-column table simply cannot fit a narrow phone screen, so instead
+   of shrinking columns illegibly, each row becomes its own block. */
+@media (max-width: 700px) {
+  .producer-block { padding: 20px 16px 22px; }
+
+  .wines-table, .wines-table thead, .wines-table tbody,
+  .wines-table th, .wines-table td, .wines-table tr {
+    display: block;
+    width: 100% !important;
+  }
+  .wines-table thead { display: none; }
+  .wines-table tr {
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+    padding: 12px;
+    overflow: hidden; /* contains the floated .col-cart button within this row */
+  }
+  .wines-table td {
+    border-bottom: none;
+    padding: 4px 0;
+  }
+  .col-cuvee { padding-bottom: 6px !important; }
+  .col-desc { font-size: 13.5px; }
+  .col-price {
+    display: inline-block !important;
+    font-size: 17px;
+  }
+  .col-cart {
+    display: inline-block !important;
+    float: right;
+    text-align: right;
+  }
+  .col-price::after { content: ""; }
+}
+
+
