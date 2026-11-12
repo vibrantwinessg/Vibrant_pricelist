@@ -132,6 +132,9 @@ function parsePortfolio(html) {
       const priceRaw = cleanText(priceTd.textContent);
       const soldOut = /sold\s*out/i.test(priceRaw);
       const priceNum = soldOut ? null : parseFloat(priceRaw.replace(/[^0-9.]/g, ""));
+      // No number in the cell (e.g. "POA", "Price on request") -> price on application
+      const poa = !soldOut && !Number.isFinite(parsedPrice);
+      const priceNum = (soldOut || poa) ? null : parsedPrice;
 
       const { style, grape } = splitStyleGrape(typeText);
       const id = slugify(`${producerName}__${cuveeName}`);
@@ -140,7 +143,7 @@ function parsePortfolio(html) {
         id, producerId, producer: producerName, region, eta,
         cuvee: cuveeName, type: typeText, style, grape,
         desc: descTd ? cleanText(descTd.textContent) : "",
-        price: priceNum, soldOut,
+        price: priceNum, soldOut, poa,
       });
     });
 
@@ -364,6 +367,8 @@ function wineRow(w) {
   let actionHtml;
   if (w.soldOut) {
     actionHtml = `<span class="sold-out-label">Sold out</span>`;
+  } else if (w.poa) {
+    actionHtml = `<span class="sold-out-label">On request</span>`;
   } else if (qty > 0) {
     actionHtml = `
       <div class="qty-stepper">
@@ -382,7 +387,7 @@ function wineRow(w) {
         ${w.type ? `<div class="row-type">${escapeHtml(w.type)}</div>` : ""}
       </td>
       <td class="col-desc" data-label="Tasting Note">${escapeHtml(w.desc)}</td>
-      <td class="col-price" data-label="Price">${w.soldOut ? "" : money(w.price)}</td>
+      <td class="col-price" data-label="Price">${w.soldOut ? "" : (w.poa ? "POA" : money(w.price))}</td>
       <td class="col-cart" data-label="">${actionHtml}</td>
     </tr>`;
 }
@@ -441,7 +446,7 @@ function getCartDetailed() {
   return cart
     .map(i => {
       const p = WINES.find(x => x.id === i.id);
-      return p ? { ...p, qty: i.qty, lineTotal: (p.price || 0) * i.qty } : null;
+      return (p && !p.poa) ? { ...p, qty: i.qty, lineTotal: (p.price || 0) * i.qty } : null;
     })
     .filter(Boolean);
 }
